@@ -6,12 +6,12 @@
 // הגדרות הפרויקט בפיירבייס - כאן ניתן להזין את מפתחות הפרויקט שלך מ-Firebase Console:
 // (Firebase Console -> Project Settings -> General -> Your apps -> Web app)
 const firebaseConfig = {
-  apiKey: "AIzaSyDemoProjectKeyForSchoolLaptops12345",
+  apiKey: "AIzaSyDVDlZTP5DmKmi4BL2odv_glYXH_IHtYQE",
   authDomain: "school-laptops-cart.firebaseapp.com",
   projectId: "school-laptops-cart",
-  storageBucket: "school-laptops-cart.appspot.com",
-  messagingSenderId: "109876543210",
-  appId: "1:109876543210:web:abcdef1234567890"
+  storageBucket: "school-laptops-cart.firebasestorage.app",
+  messagingSenderId: "286284022562",
+  appId: "1:286284022562:web:490698864329e3310d5b7b"
 };
 
 let firebaseApp = null;
@@ -24,6 +24,8 @@ const AUTHORIZED_ADMIN_EMAILS = [
   "iritulp@gmail.com",
   "zviajer@gmail.com"
 ];
+
+const app = initializeApp(firebaseConfig);
 
 function initFirebase(onStateUpdateCallback) {
   try {
