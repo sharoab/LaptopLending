@@ -752,32 +752,6 @@ function closeGoogleSignInModal() {
   if (modal) modal.classList.remove('active');
 }
 
-function quickFillGoogleAdmin(email, name) {
-  const emailInput = document.getElementById('google-email-input');
-  const nameInput = document.getElementById('google-name-input');
-  if (emailInput) emailInput.value = email;
-  if (nameInput) nameInput.value = name;
-}
-
-function setupQuickProfiles() {
-  const pillsContainer = document.getElementById('quick-pills-list');
-  if (!pillsContainer) return;
-  pillsContainer.innerHTML = '';
-
-  DEMO_PROFILES.forEach(profile => {
-    const pill = document.createElement('button');
-    pill.type = 'button';
-    pill.className = 'profile-pill';
-    pill.innerHTML = `<span>${profile.avatar}</span> <span>${profile.name}</span>`;
-    pill.onclick = () => {
-      document.getElementById('teacher-name-input').value = profile.name;
-      document.getElementById('teacher-email-input').value = profile.email;
-      handleLogin(profile.name, profile.email, profile.avatar, true);
-    };
-    pillsContainer.appendChild(pill);
-  });
-}
-
 // ------------------------------------------------------------------
 // Share & QR Modal
 // ------------------------------------------------------------------
@@ -867,7 +841,6 @@ function printQrSticker() {
 // Event Listeners & Initialization
 // ------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  setupQuickProfiles();
   initAuth();
   fetchState();
 
@@ -900,22 +873,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 1000);
 
-  // Login Form Submit (הרשמה ידנית)
+  // כניסה דרך טופס הקלדת מייל (ללא גוגל)
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('teacher-name-input').value;
-      const email = document.getElementById('teacher-email-input').value || `${encodeURIComponent(name)}@school.edu.il`;
+      const name = document.getElementById('teacher-name-input').value.trim();
+      const email = document.getElementById('teacher-email-input').value.trim();
+      
+      if (!name) {
+        showToast('חובה להכניס את שמך תחילה', 'error');
+        document.getElementById('teacher-name-input').focus();
+        return;
+      }
+      if (!email) {
+        showToast('נא להזין כתובת אימייל', 'error');
+        document.getElementById('teacher-email-input').focus();
+        return;
+      }
+
       const remember = document.getElementById('remember-me-checkbox').checked;
       handleLogin(name, email, '👨‍🏫', remember);
     });
   }
 
-  // חיבור דרך גוגל -> פותח את מסך הכנסת מייל Google
+  // חיבור דרך גוגל -> מוודא ששם המורה הוזן תחילה, ואז פותח את מסך הכנסת מייל Google
   const googleBtn = document.getElementById('google-login-btn');
   if (googleBtn) {
     googleBtn.addEventListener('click', () => {
+      const name = document.getElementById('teacher-name-input').value.trim();
+      if (!name) {
+        showToast('נא להכניס תחילה את שמך בשדה השם', 'error');
+        document.getElementById('teacher-name-input').focus();
+        return;
+      }
       openGoogleSignInModal();
     });
   }
@@ -926,12 +917,11 @@ document.addEventListener('DOMContentLoaded', () => {
     googleEmailForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('google-email-input').value.trim();
-      let name = document.getElementById('google-name-input').value.trim();
-      if (!name) {
-        name = email.split('@')[0];
-      }
+      const teacherNameInput = document.getElementById('teacher-name-input');
+      const name = (teacherNameInput?.value.trim()) || email.split('@')[0];
+      const remember = document.getElementById('remember-me-checkbox')?.checked ?? true;
       closeGoogleSignInModal();
-      handleLogin(name, email, '👑', true);
+      handleLogin(name, email, '👑', remember);
     });
   }
 
@@ -962,9 +952,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Main CTA button
   document.getElementById('main-cta-btn')?.addEventListener('click', handleMainCtaClick);
 
-  // Share / QR Modal
+  // Share / QR Modal (מופעל מכפתור ה-Header)
   document.getElementById('btn-share-qr')?.addEventListener('click', openShareModal);
-  document.getElementById('login-share-qr-btn')?.addEventListener('click', openShareModal);
   document.getElementById('modal-share-close')?.addEventListener('click', closeShareModal);
   document.getElementById('btn-copy-url')?.addEventListener('click', copyShareUrl);
   document.getElementById('btn-print-qr')?.addEventListener('click', printQrSticker);

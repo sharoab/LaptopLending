@@ -88,7 +88,13 @@
         <h1 class="login-title">עגלת מחשבים בית ספרית</h1>
         <p class="login-subtitle">התחבר בקלות כדי להשאיל מחשב נייד לכיתה</p>
 
-        <!-- Google Fast Login Button -->
+        <!-- 1. שדה חובה להכנסת שם המשתמש -->
+        <div class="form-group">
+          <label for="teacher-name-input" class="form-label">שם המורה (שדה חובה)</label>
+          <input type="text" id="teacher-name-input" class="form-input" placeholder="הכנס את שמך המלא" required>
+        </div>
+
+        <!-- 2. אפשרות התחברות דרך חשבון Google -->
         <button type="button" id="google-login-btn" class="google-auth-btn">
           <svg class="google-g-icon" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
@@ -96,22 +102,18 @@
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.27 2.61 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          <span>התחברות מהירה באמצעות Google</span>
+          <span>התחבר באמצעות חשבון Google</span>
         </button>
 
         <div class="divider">
-          <span>או הרשמה בפרטים אישיים</span>
+          <span>או הקלדת כתובת מייל (ללא גוגל)</span>
         </div>
 
+        <!-- 3. אפשרות הקלדת מייל ללא גוגל + זכור אותי + כניסה למערכת -->
         <form id="login-form">
           <div class="form-group">
-            <label for="teacher-name-input" class="form-label">שם המורה המלא</label>
-            <input type="text" id="teacher-name-input" class="form-input" placeholder="למשל: רחל כהן" required>
-          </div>
-
-          <div class="form-group">
-            <label for="teacher-email-input" class="form-label">חשבון Google (דוא"ל בית ספר)</label>
-            <input type="email" id="teacher-email-input" class="form-input" placeholder="rachel.c@school.edu.il" required>
+            <label for="teacher-email-input" class="form-label">כתובת אימייל</label>
+            <input type="email" id="teacher-email-input" class="form-input" placeholder="your-email@school.edu.il" required dir="ltr">
           </div>
 
           <label class="checkbox-label">
@@ -123,18 +125,6 @@
             כניסה למערכת
           </button>
         </form>
-
-        <!-- Quick Demo Profiles for instantaneous testing -->
-        <div class="quick-profiles-section">
-          <div class="quick-profiles-title">לבדיקה מהירה - בחר מורה מהרשימה:</div>
-          <div id="quick-pills-list" class="quick-pills-list"></div>
-        </div>
-
-        <div style="margin-top: 18px; text-align: center;">
-          <button type="button" id="login-share-qr-btn" class="header-btn" style="width: 100%; justify-content: center; padding: 10px; font-size: 13.5px; border-radius: 12px; border: 1.5px dashed #0284c7; color: #0284c7; background: #f0f9ff;">
-            📱 שיתוף קישור וסריקת QR לסמארטפון
-          </button>
-        </div>
       </div>
     </main>
 
@@ -392,30 +382,9 @@
           <input type="email" id="google-email-input" class="form-input" placeholder="example@gmail.com" required dir="ltr">
         </div>
 
-        <div class="form-group" style="text-align: right;">
-          <label for="google-name-input" class="form-label">שם מלא להצגה:</label>
-          <input type="text" id="google-name-input" class="form-input" placeholder="שם המורה" required>
-        </div>
-
-        <!-- Quick 3 Admin Accounts picker -->
-        <div class="google-admins-picker">
-          <div class="admins-picker-title">בחירה מהירה - מנהלי מערכת מורשים:</div>
-          <div class="admin-chips-list">
-            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('sharonabudi@gmail.com', 'שרון אבודי')">
-              👑 sharonabudi@gmail.com
-            </button>
-            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('iritulp@gmail.com', 'אירית')">
-              👑 iritulp@gmail.com
-            </button>
-            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('zviajer@gmail.com', 'צביה')">
-              👑 zviajer@gmail.com
-            </button>
-          </div>
-        </div>
-
         <div class="modal-actions" style="margin-top: 20px;">
           <button type="submit" class="modal-btn-confirm" style="background: #1a73e8;">
-            המשך והתחבר
+            כניסה למערכת
           </button>
           <button type="button" id="google-modal-cancel" class="modal-btn-cancel">
             ביטול
