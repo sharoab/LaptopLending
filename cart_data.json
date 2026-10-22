@@ -1,0 +1,93 @@
+{
+  "laptops": [
+    {
+      "id": 1,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 2,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 3,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 4,
+      "isTaken": true,
+      "takenBy": "רונית שטרן",
+      "takenEmail": "ronit.s@school.edu.il",
+      "takenAt": "2026-10-22T16:15:00.000Z"
+    },
+    {
+      "id": 5,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 6,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 7,
+      "isTaken": true,
+      "takenBy": "יוסי ברק",
+      "takenEmail": "yossi.b@school.edu.il",
+      "takenAt": "2026-10-22T17:05:00.000Z"
+    },
+    {
+      "id": 8,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 9,
+      "isTaken": true,
+      "takenBy": "דנה מזרחי",
+      "takenEmail": "dana.m@school.edu.il",
+      "takenAt": "2026-10-22T15:30:00.000Z"
+    },
+    {
+      "id": 10,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    },
+    {
+      "id": 11,
+      "isTaken": true,
+      "takenBy": "אורית גל",
+      "takenEmail": "orit.g@school.edu.il",
+      "takenAt": "2026-10-22T17:40:00.000Z"
+    },
+    {
+      "id": 12,
+      "isTaken": false,
+      "takenBy": null,
+      "takenEmail": null,
+      "takenAt": null
+    }
+  ],
+  "adminEmails": [
+    "sharonabudi@gmail.com",
+    "iritulp@gmail.com",
+    "zviajer@gmail.com"
+  ]
+}

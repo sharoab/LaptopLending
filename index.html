@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>תפוס - ניהול עגלת מחשבים בית ספרית</title>
+  <link rel="icon" type="image/png" href="public/logo.png">
+  <link rel="stylesheet" href="public/styles.css">
+</head>
+<body>
+
+  <!-- ========================================================
+       FLOATING TOP BANNER (הווידג'ט הצף - מופיע כשהמחשב אצל המורה)
+       ======================================================== -->
+  <div id="floating-widget" class="floating-widget" style="display: none;">
+    <div class="widget-info">
+      <div class="widget-title">
+        <span>💻</span>
+        <span>מחשב מס' <strong id="widget-laptop-num">3</strong> אצלך כרגע</span>
+      </div>
+      <div class="widget-timer-badge">
+        <span class="pulse-dot"></span>
+        <span>אצלך כבר</span>
+        <span id="widget-timer">00:00:00</span>
+      </div>
+    </div>
+    <button id="widget-return-btn" class="widget-return-btn" type="button" title="לחץ כאן להחזרת המחשב">
+      לחץ להחזרה
+    </button>
+  </div>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- ========================================================
+         APP HEADER (מופיע במסכי הבית והניהול)
+         ======================================================== -->
+    <header id="app-header" class="app-header" style="display: none;">
+      <div class="header-brand">
+        <img src="public/logo.png" alt="תפוס - לוגו" class="header-logo-img" id="header-logo">
+      </div>
+
+      <div class="header-actions">
+        <button id="nav-btn-home" class="header-btn active" type="button">
+          🏠 ראשי
+        </button>
+        <button id="nav-btn-admin" class="header-btn" type="button" style="display: none;">
+          ⚙️ ניהול
+        </button>
+        <button id="btn-share-qr" class="header-btn" type="button" title="שתף קישור או ברקוד לטלפון">
+          📱 שיתוף / QR
+        </button>
+      </div>
+
+      <div class="header-user">
+        <div class="user-meta">
+          <div id="header-user-name" class="user-greeting">שלום, מורה</div>
+          <span id="header-user-role" class="user-role-badge">מורה</span>
+        </div>
+        <div id="header-user-avatar" class="user-avatar" title="פרופיל / התנתקות">
+          👩‍🏫
+        </div>
+      </div>
+
+      <!-- Dropdown User Menu -->
+      <div id="user-menu-dropdown" class="user-menu-dropdown">
+        <div class="dropdown-item" onclick="showScreen('home')">
+          <span>🏠</span> <span>מסך הבית</span>
+        </div>
+        <div class="dropdown-item" onclick="showScreen('admin')">
+          <span>⚙️</span> <span>מסך ניהול עגלה</span>
+        </div>
+        <div class="dropdown-item danger" id="btn-logout">
+          <span>🚪</span> <span>התנתקות מהמערכת</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================================
+         SCREEN 1: LOGIN & REGISTRATION (מסך ראשון - כניסה והרשמה)
+         ======================================================== -->
+    <main id="screen-login" class="screen active">
+      <div class="login-logo-container">
+        <img src="public/logo.png" alt="תפוס - השאלת מחשבים" class="login-hero-logo">
+      </div>
+
+      <div class="login-card">
+        <h1 class="login-title">עגלת מחשבים בית ספרית</h1>
+        <p class="login-subtitle">התחבר בקלות כדי להשאיל מחשב נייד לכיתה</p>
+
+        <!-- Google Fast Login Button -->
+        <button type="button" id="google-login-btn" class="google-auth-btn">
+          <svg class="google-g-icon" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.27 21.39 7.35 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.27 2.61 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>התחברות מהירה באמצעות Google</span>
+        </button>
+
+        <div class="divider">
+          <span>או הרשמה בפרטים אישיים</span>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label for="teacher-name-input" class="form-label">שם המורה המלא</label>
+            <input type="text" id="teacher-name-input" class="form-input" placeholder="למשל: רחל כהן" required>
+          </div>
+
+          <div class="form-group">
+            <label for="teacher-email-input" class="form-label">חשבון Google (דוא"ל בית ספר)</label>
+            <input type="email" id="teacher-email-input" class="form-input" placeholder="rachel.c@school.edu.il" required>
+          </div>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember-me-checkbox" class="custom-checkbox" checked>
+            <span>זכור אותי (הכניסות הבאות יובילו ישירות למסך הבית)</span>
+          </label>
+
+          <button type="submit" class="btn-primary">
+            כניסה למערכת
+          </button>
+        </form>
+
+        <!-- Quick Demo Profiles for instantaneous testing -->
+        <div class="quick-profiles-section">
+          <div class="quick-profiles-title">לבדיקה מהירה - בחר מורה מהרשימה:</div>
+          <div id="quick-pills-list" class="quick-pills-list"></div>
+        </div>
+
+        <div style="margin-top: 18px; text-align: center;">
+          <button type="button" id="login-share-qr-btn" class="header-btn" style="width: 100%; justify-content: center; padding: 10px; font-size: 13.5px; border-radius: 12px; border: 1.5px dashed #0284c7; color: #0284c7; background: #f0f9ff;">
+            📱 שיתוף קישור וסריקת QR לסמארטפון
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ========================================================
+         SCREEN 2: HOME SCREEN (מסך הבית - השאלת מחשבים)
+         ======================================================== -->
+    <main id="screen-home" class="screen">
+      <div class="home-content">
+
+        <!-- 1. כרטיסת זמינות (Counter Card) -->
+        <section class="counter-card" aria-label="כרטיסת זמינות מחשבים">
+          <div class="counter-card-header">זמינות עגלת המחשבים כעת</div>
+          <div class="counter-big-number">
+            <span id="available-count">8 מחשבים פנויים</span>
+            <span id="total-count" class="counter-total-text">(מתוך 12)</span>
+          </div>
+          <div class="counter-progress-bar-bg">
+            <div id="counter-bar-fill" class="counter-progress-bar-fill" style="width: 66%;"></div>
+          </div>
+        </section>
+
+        <!-- 2. כפתור פעולה ראשי (CTA) -->
+        <section class="main-cta-wrapper">
+          <button id="main-cta-btn" class="main-cta-btn" type="button">
+            <span class="cta-icon">💻</span>
+            <span>קח מחשב פנוי</span>
+          </button>
+        </section>
+
+        <!-- 3. כרטיסת אישור ירוקה (מופיעה כשהמחשב אצל המורה) -->
+        <section id="active-loan-notice-card" class="active-loan-notice-card" style="display: none;">
+          <div class="notice-icon-box">✓</div>
+          <div class="notice-text-content">
+            <div class="notice-title">המחשב הוקצה לך בהצלחה. תהנה בשיעור! 🎉</div>
+            <div class="notice-desc">
+              הווידג'ט למעלה יישאר זמין עבורך לאורך כל היום. כשתחזיר את המחשב פיזית לעגלה, פשוט לחץ על <strong>"לחץ להחזרה"</strong>.
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. בחירת מחשב ספציפי (טבלה/גריד של 12 כפתורים) -->
+        <section class="laptop-selection-section">
+          <div class="section-header-box">
+            <h2 class="section-title">
+              <span>💻</span>
+              <span>לבחירת מחשב מסוים מהעגלה</span>
+            </h2>
+            <p class="section-subtitle">
+              לבחירה לחץ על מחשב פנוי
+            </p>
+          </div>
+
+          <div class="laptop-legend">
+            <div class="legend-item">
+              <span class="legend-dot green"></span>
+              <span>פנוי להשאלה</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot red"></span>
+              <span>תפוס</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot blue"></span>
+              <span>המחשב שברשותך</span>
+            </div>
+          </div>
+
+          <!-- 12 Laptops Grid -->
+          <div id="laptops-grid" class="laptops-grid">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ========================================================
+         SCREEN 3: ADMIN SCREEN (מסך ניהול - רכזת תקשוב)
+         ======================================================== -->
+    <main id="screen-admin" class="screen">
+      <div class="admin-header-box">
+        <div>
+          <h1 class="admin-title">ניהול עגלת מחשבים</h1>
+          <p class="admin-subtitle">תצוגת מנהל מערכת • מעקב, בקרה ושחרור מחשבים</p>
+        </div>
+        <div id="firebase-status-badge" class="firebase-badge local">
+          🟡 סנכרון מקומי + Firebase מוכן
+        </div>
+      </div>
+
+      <!-- מנהלי מערכת מורשים -->
+      <div class="admin-authorized-box">
+        <span class="auth-icon">🔐</span>
+        <span>מורשי ניהול בלבד:</span>
+        <span class="auth-pill">sharonabudi@gmail.com</span>
+        <span class="auth-pill">iritulp@gmail.com</span>
+        <span class="auth-pill">zviajer@gmail.com</span>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="admin-stats-cards">
+        <div class="stat-card green">
+          <div id="admin-stat-free" class="stat-value">8</div>
+          <div class="stat-label">מחשבים פנויים</div>
+        </div>
+        <div class="stat-card red">
+          <div id="admin-stat-taken" class="stat-value">4</div>
+          <div class="stat-label">מחשבים תפוסים</div>
+        </div>
+        <div class="stat-card blue">
+          <div id="admin-stat-total" class="stat-value">12</div>
+          <div class="stat-label">סה"כ בעגלה</div>
+        </div>
+      </div>
+
+      <!-- Global Release All Button -->
+      <button id="admin-release-all-btn" class="admin-release-all-btn" type="button">
+        <span>🔄</span>
+        <span>שחרר את כל המחשבים התפוסים בעגלה</span>
+      </button>
+
+      <!-- 12-Laptop Clean List View -->
+      <div class="admin-table-container">
+        <div id="admin-laptops-list">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ========================================================
+       MODAL 1: BORROW CONFIRMATION DIALOG (אפשרויות: לקחתי / התחרטתי)
+       ======================================================== -->
+  <div id="modal-borrow" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-icon-bubble">💻</div>
+      <h3 class="modal-title">אישור השאלת מחשב נייד</h3>
+      
+      <!-- הגדלה והבלטה מיוחדת של הכיתוב -->
+      <div class="modal-laptop-highlight">
+        נבחר עבורך מחשב מספר <span id="modal-borrow-laptop-num" class="highlight-num">1</span> מעגלת המחשבים
+      </div>
+
+      <p class="modal-text">האם לקחת את המחשב מהעגלה?</p>
+      
+      <div class="modal-actions">
+        <button id="modal-btn-take" class="modal-btn-confirm" type="button">
+          לקחתי
+        </button>
+        <button id="modal-btn-cancel" class="modal-btn-cancel" type="button">
+          התחרטתי, החזר מחשב
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 2: ADMIN SINGLE RESET CONFIRMATION
+       ======================================================== -->
+  <div id="modal-admin-reset" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-icon-bubble" style="background: #fee2e2; color: #dc2626;">🔓</div>
+      <h3 class="modal-title">שחרור מחשב ידני</h3>
+      <p class="modal-text">
+        האם אתה בטוח שברצונך לשחרר ידנית את <strong>מחשב מס' <span id="modal-reset-laptop-num">1</span></strong> ולאפס אותו למצב פנוי?
+      </p>
+      <div class="modal-actions">
+        <button id="modal-admin-btn-confirm" class="modal-btn-confirm" style="background: #dc2626;" type="button">
+          כן, שחרר מחשב עכשיו
+        </button>
+        <button id="modal-admin-btn-cancel" class="modal-btn-cancel" type="button">
+          ביטול
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 3: ADMIN RESET ALL CONFIRMATION
+       ======================================================== -->
+  <div id="modal-admin-reset-all" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-icon-bubble" style="background: #fee2e2; color: #dc2626;">⚠️</div>
+      <h3 class="modal-title">איפוס ושחרור כל המחשבים</h3>
+      <p class="modal-text">
+        פעולה זו תשחרר <strong><span id="modal-reset-all-count">0</span> מחשבים תפוסים</strong> ותחזיר את כל 12 המחשבים למצב פנוי.<br>
+        האם אתה בטוח שברצונך להמשיך?
+      </p>
+      <div class="modal-actions">
+        <button id="modal-reset-all-confirm" class="modal-btn-confirm" style="background: #dc2626;" type="button">
+          כן, שחרר את כל המחשבים
+        </button>
+        <button id="modal-reset-all-cancel" class="modal-btn-cancel" type="button">
+          ביטול
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 4: SHARE AND QR CODE FOR MOBILE ACCESS & PRINTING
+       ======================================================== -->
+  <div id="modal-share" class="modal-backdrop">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-icon-bubble" style="background: #e0f2fe; color: #0284c7;">📱</div>
+      <h3 class="modal-title">כניסה מהנייד וסריקת QR</h3>
+      <p class="modal-text">
+        מורים יכולים לסרוק את הברקוד ישירות עם מצלמת הטלפון או לגלוש לכתובת למטה:
+      </p>
+
+      <div style="margin: 16px 0; display: flex; justify-content: center;">
+        <div style="background: #ffffff; padding: 12px; border-radius: 16px; border: 2px dashed #0284c7; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);">
+          <img id="qr-code-img" src="" alt="קוד QR לכניסה לאפליקציה" style="width: 200px; height: 200px; display: block; border-radius: 8px;">
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; text-align: left; direction: ltr; font-family: monospace; font-size: 13.5px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <span id="share-url-text" style="word-break: break-all; color: #0369a1; font-weight: 700;">http://localhost:8000</span>
+        <button id="btn-copy-url" type="button" style="background: #0284c7; color: white; border: none; border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer; white-space: nowrap; font-family: sans-serif; font-weight: 600;">
+          העתק קישור
+        </button>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btn-print-qr" class="modal-btn-confirm" type="button" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+          🖨️ הדפסת מדבקת QR לתלייה על עגלת המחשבים
+        </button>
+        <button id="modal-share-close" class="modal-btn-cancel" type="button">
+          סגור
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 5: GOOGLE SIGN-IN EMAIL MODAL (מסך הכנסת מייל גוגל)
+       ======================================================== -->
+  <div id="modal-google-signin" class="modal-backdrop">
+    <div class="modal-card google-signin-card">
+      <div class="google-header">
+        <svg class="google-logo-svg" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.27 21.39 7.35 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.27 2.61 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <h2 class="google-signin-title">כניסה באמצעות Google</h2>
+        <p class="google-signin-subtitle">הזן את חשבון ה-Google (Gmail) שלך כדי להמשיך</p>
+      </div>
+
+      <form id="google-email-form">
+        <div class="form-group" style="text-align: right; margin-top: 16px;">
+          <label for="google-email-input" class="form-label">כתובת אימייל Google:</label>
+          <input type="email" id="google-email-input" class="form-input" placeholder="example@gmail.com" required dir="ltr">
+        </div>
+
+        <div class="form-group" style="text-align: right;">
+          <label for="google-name-input" class="form-label">שם מלא להצגה:</label>
+          <input type="text" id="google-name-input" class="form-input" placeholder="שם המורה" required>
+        </div>
+
+        <!-- Quick 3 Admin Accounts picker -->
+        <div class="google-admins-picker">
+          <div class="admins-picker-title">בחירה מהירה - מנהלי מערכת מורשים:</div>
+          <div class="admin-chips-list">
+            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('sharonabudi@gmail.com', 'שרון אבודי')">
+              👑 sharonabudi@gmail.com
+            </button>
+            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('iritulp@gmail.com', 'אירית')">
+              👑 iritulp@gmail.com
+            </button>
+            <button type="button" class="admin-chip" onclick="quickFillGoogleAdmin('zviajer@gmail.com', 'צביה')">
+              👑 zviajer@gmail.com
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 20px;">
+          <button type="submit" class="modal-btn-confirm" style="background: #1a73e8;">
+            המשך והתחבר
+          </button>
+          <button type="button" id="google-modal-cancel" class="modal-btn-cancel">
+            ביטול
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 1-Second Refresh Animation Loader -->
+  <div id="loader-refresh-overlay" class="loader-refresh-overlay">
+    <div class="spinner"></div>
+    <div style="font-weight: 700; color: #0284c7; font-size: 15px;">מאתר מחשב פנוי בעגלה...</div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Firebase SDK and Configuration -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="public/firebase-config.js"></script>
+
+  <!-- Scripts -->
+  <script src="public/app.js"></script>
+</body>
+</html>
